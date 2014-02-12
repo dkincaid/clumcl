@@ -1,6 +1,7 @@
 (ns clumcl.uts.content
   "This namespace contains functions for accessing the content API of UTS.
-Not all of the methods are implemented yet. If there is one missing that you need you can use the defcontentfn macro to create it."
+Not all of the methods are implemented yet. If there is one missing that you
+need you can use the defcontentfn macro to create it."
   (:require [clumcl.uts.security :as sec]
             [clojure.java.data :refer [to-java]]
             [taoensso.timbre :as timbre
@@ -32,7 +33,8 @@ Not all of the methods are implemented yet. If there is one missing that you nee
     psf))
 
 (defn create-psf
-  "Create a page, sort, filter object optionally using the arguments in the provided map.
+  "Create a page, sort, filter object optionally using the arguments in the 
+provided map.
 You only need to provide the keys that you want to change from their defaults.
 
    Valid keys are:
@@ -52,8 +54,10 @@ You only need to provide the keys that you want to change from their defaults.
      (Psf.)))
 
 (defmacro defcontentfn
-  "Creates a function that calls the given content API method. It adds the conn and version arguments first then all the provided
-arguments for the function. If a transform-fns are provided it will thread the result of the method call through apply them using ->> threading macro.
+  "Creates a function that calls the given content API method. It adds the conn 
+and version arguments first then all the provided arguments for the function. If
+a transform-fns are provided it will thread the result of the method call 
+through apply them using the ->> threading macro.
 
 For example:
 
@@ -71,17 +75,21 @@ will generate a function with the following signature:
   [f docstring args api-name & transform-fns]
   (if transform-fns
    `(defn ~f ~docstring [~'conn ~'version ~@args] 
-      (let [result# (. content-service ~api-name (sec/single-use-ticket ~'conn) ~'version ~@args)]
+      (let [result# 
+            (. content-service ~api-name (sec/single-use-ticket ~'conn) ~'version ~@args)]
         (->> result# ~@transform-fns)))
+
    `(defn ~f ~docstring [~'conn ~'version ~@args] 
        (. content-service ~api-name (sec/single-use-ticket ~'conn) ~'version ~@args))))
 
 (defcontentfn get-concept
-  "Get the concept for the CUI. Returns a map constructed from the ConceptDTO object."
+  "Get the concept for the CUI. Returns a map constructed from the ConceptDTO 
+object."
   [cui]
   getConcept bean)
 
 (defcontentfn get-concept-definitions
-  "Get the definitions for the given concept CUI using the provided PSF. Returns a list of maps constructred from the DefinitionDTO objects."
+  "Get the definitions for the given concept CUI using the provided PSF. Returns 
+a list of maps constructed from the DefinitionDTO objects."
   [cui psf]
   getConceptDefinitions (map bean)) 
