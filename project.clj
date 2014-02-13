@@ -9,5 +9,5 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [com.taoensso/timbre "3.0.0"]
                  [org.clojure/java.data "0.1.1"]]
-  :profiles {:dev {:dependencies [[midje "1.6.2"]
-                                  [lein-midje "3.1.3"]]}})
+  :profiles {:dev {:dependencies [[midje "1.6.2"]]
+                   :plugins [[lein-midje "3.1.3"]]}})
