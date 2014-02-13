@@ -1,6 +1,6 @@
 # clumcl
 
-[![Build Status](https://secure.travis-ci.org/nathanmarz/cascalog.png?branch=develop)](http://travis-ci.org/nathanmarz/cascalog)
+[![Build Status](https://secure.travis-ci.org/dkincaid/clumcl.png?branch=develop)](http://travis-ci.org/dkincaid/clumcl)
 
 A Clojure UMLS client library
 
