@@ -1,5 +1,7 @@
 # clumcl
 
+[![Build Status](https://secure.travis-ci.org/nathanmarz/cascalog.png?branch=develop)](http://travis-ci.org/nathanmarz/cascalog)
+
 A Clojure UMLS client library
 
 ## Usage
