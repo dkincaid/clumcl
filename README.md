@@ -4,7 +4,8 @@ A Clojure UMLS client library
 
 ## Usage
 
-Coming soon.
+[![Current Version](https://clojars.org/clumcl/latest-version.svg)](https://clojars.org/clumcl)
+
 
 ## License
 
