@@ -8,6 +8,7 @@ A Clojure UMLS client library
 
 [![Current Version](https://clojars.org/clumcl/latest-version.svg)](https://clojars.org/clumcl)
 
+[https://dkincaid.github.com/clumcl](API Documentation)
 
 ## License
 
