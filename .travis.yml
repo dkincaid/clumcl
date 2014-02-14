@@ -1,3 +1,6 @@
 language: clojure
 lein: lein2
-script: "lein2 midje"
+script: lein2 midje
+env: 
+  global: 
+    secure: b6tE1teDFmEELy4ssssPnPOhgXh42kF4kaxWfUtdm28LxKbUHraCLSaBC33ATfBF+8otqzVea+0qKoMGxPLAFSKNVliftq3dBpcCN/0aG1pu5EGW+5ucS3icWbnCHRt2mAk9BBmbtBkLIBJ6JDR0HjjF6cOiHYkQKBwYDxijclU=
