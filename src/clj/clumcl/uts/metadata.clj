@@ -40,8 +40,23 @@ will generate a function with the following signature:
   []
   getCurrentUMLSVersion)
 
+(defmetadatafn get-all-umls-versions
+  "Get all the UMLS versions."
+  []
+  getAllUMLSVersions)
+
 (defmetadatafn get-all-sources
   "Get all of the sources. Returns a list of maps constructed from the
 returned SourceDTO objects."
   [version]
   getAllSources (map bean))
+
+
+
+
+
+
+
+
+
+
