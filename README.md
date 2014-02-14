@@ -10,6 +10,11 @@ A Clojure UMLS client library
 
 [API Documentation](https://dkincaid.github.com/clumcl)
 
+## Building and testing
+
+In order to run the tests you'll need to set two environment variables. `UMLS_USER` and
+`UMLS_PASSWORD` to your UMLS credentials.
+
 ## License
 
 Copyright © 2014 Dave Kincaid
