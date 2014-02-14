@@ -47,10 +47,10 @@ Credentials should be a map of the form:
   {:umls-user <UMLS username>
    :umls-password <UMLS password>}"
   [creds]
-  (let [cid (java.util.UUID/randomUUID)
-        tgt (ticket-granting-ticket creds)]
-    (swap! connections assoc cid [tgt creds])
-    cid))
+  (if-let [tgt (ticket-granting-ticket creds)]
+    (ffirst  
+     (swap! connections assoc (java.util.UUID/randomUUID) [tgt creds]))
+    nil))
 
 (defn disconnect
   "Destroys the connection to the service. Note that since there isn't really
