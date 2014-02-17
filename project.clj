@@ -1,4 +1,4 @@
-(defproject clumcl "0.1.0"
+(defproject clumcl "0.2.0-SNAPSHOT"
   :description "The Clojure UMLS Client Library"
   :url "http://dkincaid.github.com/clumcl"
   :license {:name "Eclipse Public License"
