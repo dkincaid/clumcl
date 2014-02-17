@@ -1,5 +1,17 @@
 (ns clumcl.uts.metadata
-  "This namespace contains functions for interacting with the UMLS meta thesaurus web service API for metadata."
+  "This namespace contains functions for accessing the Metathesaurus Metadata API v2.0 of UTS.
+
+Each of the methods in the UTS 2.0 Metathesaurus Metadata API has a corresponding 
+Clojure function in this namespace. The method names are reformatted into idiomatic
+Clojure style using hyphens and all lower case. For example, the method getRootSource
+is renamed get-root-source.
+
+Each function takes the connection (the value returned from clumcl.uts.security/connect)
+as the first argument. Each function then takes further arguments as defined in the UTS 2.0 API docs.
+
+See https://uts.nlm.nih.gov//home.html#apidocumentation for the documentation of all
+the functions."
+
   (:require [clumcl.uts.security :as sec]
             [camel-snake-kebab :refer [->kebab-case]]
             [taoensso.timbre :as timbre

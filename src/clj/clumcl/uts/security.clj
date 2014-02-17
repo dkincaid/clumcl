@@ -1,5 +1,17 @@
 (ns clumcl.uts.security
-  "This namespace contains functions for logging into and accessing UTS."
+  "This namespace contains functions for logging into and accessing UTS. The
+main functions in this namespace that a client application will use are the connect 
+and disconnect functions.
+ 
+connect will return a token that is used as a \"connection\" in the other namespaces.
+This doesn't actually create an open connection to the web service. It generates what
+the UTS API calls a \"proxy grant ticket\" that is used to generate authorization
+tokens when API calls are made.
+
+disconnect removes the token from the internal map. It is not strictly necessary to
+call disconnect, but if you don't you'll eventually run out of memory (it'll probably
+take a LONG time for that to happen though)."
+
   (:require [taoensso.timbre :as timbre
              :refer (trace debug info warn error fatal spy with-log-level)]) 
   (:import [gov.nih.nlm.uts.webservice.security UtsWsSecurityControllerImplService 

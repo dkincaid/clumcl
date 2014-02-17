@@ -1,7 +1,18 @@
 (ns clumcl.uts.content
-  "This namespace contains functions for accessing the content API of UTS.
-Not all of the methods are implemented yet. If there is one missing that you
-need you can use the defcontentfn macro to create it."
+  "This namespace contains functions for accessing the Metathesaurus Content API v2.0 of UTS.
+
+Each of the methods in the UTS 2.0 Metathesaurus Content API has a corresponding 
+Clojure function in this namespace. The method names are reformatted into idiomatic
+Clojure style using hyphens and all lower case. For example, the method getConceptAtoms
+is renamed get-concept-atoms.
+
+Each function takes the connection (the value returned from clumcl.uts.security/connect)
+and the UMLS version (e.g. \"2013AB\") as the first two arguments. Each function then
+takes further arguments as defined in the UTS 2.0 API docs.
+
+See https://uts.nlm.nih.gov//home.html#apidocumentation for the documentation of all
+the functions."
+
   (:require [clumcl.uts.security :as sec]
             [clojure.java.data :refer [to-java]]
             [camel-snake-kebab :refer [->kebab-case]]
