@@ -67,15 +67,16 @@ You only need to provide the keys that you want to change from their defaults.
 (defmacro gen-fn
   [meth transform-fns]
   `(fn [~'conn ~'version ~'target ~'str ~'search-type ~'psf]
-     (->> (. finder-service
-             ~meth
-             (sec/single-use-ticket ~'conn)
-             ~'version
-             ~'target
-             ~'str
-             ~'search-type
-             ~'psf)
-          ~@transform-fns)))
+     (if-let [result# (. finder-service
+                  ~meth
+                  (sec/single-use-ticket ~'conn)
+                  ~'version
+                  ~'target
+                  ~'str
+                  ~'search-type
+                  ~'psf)]
+          (->> result# ~@transform-fns)
+          nil)))
 
 (defmacro def-fns [& args]
   `(do ~@(for [[meth transform-fns] (partition 2 args)

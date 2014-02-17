@@ -68,12 +68,13 @@ You only need to provide the keys that you want to change from their defaults.
 (defmacro gen-fn
   [meth args transform-fns]
   `(fn [~'conn ~'version ~@args]
-     (->> (. content-service
-             ~meth
-             (sec/single-use-ticket ~'conn)
-             ~'version
-             ~@args)
-          ~@transform-fns)))
+     (if-let [result# (. content-service
+                  ~meth
+                  (sec/single-use-ticket ~'conn)
+                  ~'version
+                  ~@args)]
+       (->> result# ~@transform-fns)
+       nil)))
 
 (defmacro def-fns [& args]
   `(do ~@(for [[meth args transform-fns] (partition 3 args)
@@ -174,110 +175,3 @@ You only need to provide the keys that you want to change from their defaults.
   getSourceDescriptorTreePositionPathsToRoot [sdui-pos-id psf] [(map bean)]
   getSourceDescriptorTreePositionChildren [sdui-pos-id psf] [(map bean)]
   getSourceDescriptorTreePositionSiblings [sdui-pos-id psf] [(map bean)])
-
-;; (defmacro defcontentfn
-;;   "Creates a function that calls a content API method. It adds the conn 
-;; and version arguments first then all the provided arguments for the function. If
-;; a transform-fns are provided it will thread the result of the method call 
-;; through apply them using the ->> threading macro. The API method that will
-;; be called is the desired function name converted to camel case.
-
-;; For example:
-
-;;    (defcontentfn get-concept
-;;      \"Get the concept\"
-;;      [cui])
-
-;; will generate a function with the following signature:
-
-;;    (defn get-concept
-;;      \"Get the concept\"
-;;      [conn version cui]
-;;      ...)
-
-;; that will call the getConcept API method."
-;;   [f docstring args & transform-fns]
-;;   (if transform-fns
-;;    `(defn ~f ~docstring [~'conn ~'version ~@args] 
-;;       (let [result# 
-;;             (. content-service ~(->camelCase f) 
-;;                (sec/single-use-ticket ~'conn) 
-;;                ~'version 
-;;                ~@args)]
-;;         (->> result# ~@transform-fns)))
-
-;;    `(defn ~f ~docstring [~'conn ~'version ~@args] 
-;;        (. content-service ~(->camelCase f)
-;;           (sec/single-use-ticket ~'conn) 
-;;           ~'version 
-;;           ~@args))))
-
-;;; Concept (CUI)
-;; (defcontentfn get-concept
-;;   "Get the concept for the CUI. Returns a map constructed from the ConceptDTO 
-;; object."
-;;   [cui] bean)
-
-;; (defcontentfn get-concept-atoms
-;;   "Get the individual atoms for a CUI. Returns a list of maps constructed from
-;; the AtomDTO objects."
-;;   [cui psf] (map bean))
-
-;; (defcontentfn get-concept-attributes
-;;   "Get the attributes for the given concept CUI using the provided PSF. Returns
-;; a list of maps constructed from the AttributeDTO objects."
-;;   [cui psf] (map bean))
-
-;; (defcontentfn get-concept-definitions
-;;   "Get the definitions for the given concept CUI using the provided PSF. Returns 
-;; a list of maps constructed from the DefinitionDTO objects."
-;;   [cui psf] (map bean)) 
-
-;; ;;; Atom (AUI)
-;; (defcontentfn get-atom
-;;   "Get the properties for the given AUI. Returns a map constructed from
-;; the AtomDTO object."
-;;   [aui] bean)
-
-;; ;;; Definition
-;; (defcontentfn get-atom-definitions
-;;   "Get the definitions for the given atom. Returns a list of maps that are
-;; constructed from the DefinitionDTO objects."
-;;   [aui psf] (map bean))
-
-;; (defcontentfn get-source-concept-definitions
-;;   "Get the source concept definitions. Returns a list of maps that are
-;; constructed from the DefinitionDTO objects."
-;;   [source-concept root-source-abbrev psf] (map bean))
-
-;; (defcontentfn get-source-descriptor-definitions
-;;   "Get the source descriptor definitions. Returns a list of maps that are
-;; constructed from the DefinitionDTO objects."
-;;   [source-descriptor root-source-abbrev psf] (map bean))
-
-;; ;;; Term Information (LUI)
-;; (defcontentfn get-term
-;;   "Get the properties for a term. Returns a map constructed from the TermDTO object."
-;;   [lui] bean)
-
-;; (defcontentfn get-term-atoms
-;;   "Get all the atoms associated with a term. Returns a list of maps constructed
-;; from the AtomDTO objects."
-;;   [lui psf] (map bean))
-
-;; ;;; String Information (SUI)
-;; (defcontentfn get-term-strings
-;;   "Get all the strings included in a term. Returns a list of maps constructed
-;; from the TermStringDTO object."
-;;   [lui psf] (map bean))
-
-;; (defcontentfn get-term-string
-;;   "Get the given string. Returns a map constructed from the TermStringDTO object."
-;;   [sui] bean)
-
-;; (defcontentfn get-term-string-atoms
-;;   "Get the atoms that contribute to the given string. Returns a list of maps
-;; constructed from the AtomDTO objects."
-;;   [sui psf] (map bean))
-
-;; ;;; Atom Cluster

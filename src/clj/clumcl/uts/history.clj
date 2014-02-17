@@ -24,12 +24,13 @@ the functions."
 (defmacro gen-fn
   [meth args transform-fns]
   `(fn [~'conn ~'version ~@args]
-     (->> (. history-service
-             ~meth
-             (sec/single-use-ticket ~'conn)
-             ~'version
-             ~@args)
-          ~@transform-fns)))
+     (if-let [result# (. history-service
+                  ~meth
+                  (sec/single-use-ticket ~'conn)
+                  ~'version
+                  ~@args)]
+          (->> result# ~@transform-fns)
+          nil)))
 
 (defmacro def-fns [& args]
   `(do ~@(for [[meth args transform-fns] (partition 3 args)
